@@ -1,0 +1,5 @@
+streamlit==1.38.0
+rdkit-pypi
+pandas==2.2.2
+plotly
+numpy
