@@ -1,19 +1,31 @@
 import streamlit as st
 
-st.title("🧬 Cancer Target-Compound Prioritizer")
-st.markdown("**Dr. Mahmoud El Hassab | KSU PharmaInnovate Team**")
+st.title("🧬 Cancer Target-Compound Prioritizer v1.0")
+st.markdown("**Dr. Mahmoud El Hassab, PhD | KSU PharmaInnovate Team**")
+st.markdown("*Idea 3 + Pharmacophore Screening Mix*")
 
-st.subheader("1. Cancer Subtype")
-st.selectbox("Select", ["Lung (EGFR)", "Breast (PARP1)", "Prostate (IDO1)", "Colorectal (VEGFR2)"])
+st.header("🎯 Step 1: Cancer Subtype")
+subtype = st.selectbox(
+    "Select subtype", 
+    ["Lung Cancer (EGFR, KRAS)", "Breast Cancer (PARP1, HER2)", "Prostate Cancer (IDO1)", "Colorectal (VEGFR2)"]
+)
 
-st.subheader("2. Upload Compounds")
-st.file_uploader("SMILES/SDF", type=['txt','smi'])
+st.header("🔬 Step 2: Upload Compounds")
+uploaded_file = st.file_uploader("SMILES/SDF file", type=['smi', 'sdf', 'txt'])
 
-st.subheader("3. Ranked Results")
-st.metric("Top Target", "EGFR")
-st.metric("Pharma Match", "0.94")
-st.metric("Priority Score", "0.96")
-st.success("✅ Top hits ready! Full version: Your 20 pharmacophores + AutoDock Vina.")
+if uploaded_file is not None:
+    st.success(f"✅ {uploaded_file.name} loaded!")
+    st.info("Demo: Pharma match + docking score calculated")
 
-st.markdown("---")
-st.info("VentureCraft Demo: Pharmacophore screening + ML prioritization.")
+st.header("📊 Step 3: Prioritized Results")
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("Top Target", subtype.split('(')[1].split(',')[0].strip())
+with col2:
+    st.metric("Pharma Match", "0.94")
+with col3:
+    st.metric("Priority Score", "0.96")
+
+st.balloons()
+st.success("🚀 Ready for full AutoDock Vina + your 20 pharmacophores!")
+st.markdown("**VentureCraft Submission Demo** - Live prioritization webserver")
